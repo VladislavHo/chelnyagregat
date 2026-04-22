@@ -1,71 +1,82 @@
-  <div class="contents_2">
-    <h3 class="title" style='padding-bottom: 0px;margin-bottom: -5px;'><span style="color:lightgray">8
-      </span><a href="tel:+78552783500" class="color_unset" >(8552) 78-35-00</a> </h3>
-    <a href="mailto:agregat-16@yandex.ru" id="header_open_call" class="small">agregat-16@yandex.ru</a>
+<div class="contents_2">
+  <h3 class="title" style='padding-bottom: 0px;margin-bottom: -5px;'><span style="color:lightgray">8
+    </span><a href="tel:+78552783500" class="color_unset">(8552) 78-35-00</a> </h3>
+  <a href="mailto:agregat-16@yandex.ru" id="header_open_call" class="small">agregat-16@yandex.ru</a>
+</div>
+<br />
+<form action="" style="width: 240px;float: right;">
+
+  <div class="form-group " id='default-suggestions'>
+    <div class="title" style="color:lightgray; padding-bottom:1em;">запросить предложение</div>
+
+    <input type="tel" class="form-control" id="input_contact" placeholder="ваш телефон или ваша почта" name="phone"
+      required autocomplete="tel"
+      onchange="$('#btnSend').addClass('btn-primary').removeClass('btn-outline-primary');">
+    <input class="typeahead form-control" type="text" placeholder="укажите..." id="select">
+    <a id="request_comment_link" href="javascript:"
+      onclick="$('#request_comment_link').addClass('hidden'); $('#request_comment').removeClass('hidden');"
+      class="small" style="color:lightgray;">добавить комментарий </a>
+    <textarea id="request_comment" class="form-control hidden" placeholder="комментарий" rows="3"></textarea>
   </div>
-  <br />
-  <form action="" style="width: 240px;float: right;">
+  <div class="agree_policy">
+    <label>
+      <input type="checkbox" id="policy_check">
+      <span>
+        Нажимая кнопку, Вы даете полное <a href="../assets/docs/2. Согласие на обработку персональных данных.pdf">согласие
+          на обработку персональных данных</a> в соответствии с <a
+          href="../assets/docs/1. Политика конфиденциальности персональных данных посетителя сайта.pdf">политикой
+          конфиденциальности</a>.
+      </span>
+    </label>
+  </div>
+  
+  <input id="btnSend" 
+    onclick="if($('#policy_check').is(':checked')){ send_request($('#select').val(), $('#input_contact').val(), $('#request_comment').val()); } else { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); }" 
+    class="btn btn-sm btn-outline-primary" type="button" value="отправить">
 
-    <div class="form-group " id='default-suggestions'>
-      <div class="title" style="color:lightgray; padding-bottom:1em;">запросить предложение</div>
-
-      <input type="tel" class="form-control" id="input_contact" placeholder="ваш телефон или ваша почта"
-        name="phone" required autocomplete="tel"
-        onchange="$('#btnSend').addClass('btn-primary');$('#btnSend').removeClass('btn-outline-primary');">
-      <input class="typeahead form-control" type="text" placeholder="укажите..." id="select">
-      <a id="request_comment_link" href="javascript:"
-        onclick="$('#request_comment_link').addClass('hidden'); $('#request_comment').removeClass('hidden');"
-        class="small" style="color:lightgray;">добавить комментарий </a>
-      <textarea id="request_comment" class="form-control hidden" placeholder="комментарий"
-        rows="3"></textarea>
-    </div>
-    <input id="btnSend" onclick="send_request( $('#select').val(), $('#input_contact').val(), $('#request_comment').val());" class="btn btn-sm btn-outline-primary" type="button"
-      value="отправить">
-
-    <!-- script для typeahaed  -->
-    <script>
-      // происходит только после загрузки 
-      $(document).ready(function () {
-        // присваивает переменной спец.объект, в котором можно задать правила чтения данных, в том числе JSON.
-        var dvigatels = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.whitespace,
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          // prefetch: 'models.json'
-          local: {{ include.list }}
-        });
-        // функция которая будет выполняться - когда нужна подстановка
-        function dvigatelsWithDefaults(q, sync) {
-          // если текст не был набран - покажет список по-умолчанию
-          if (q === '') {
-            sync( {{ include.group }} );
-          }
-          // если был набран текст - поищет
-          else {
-            dvigatels.search(q, sync);
-          }
+  <script>
+    $(document).ready(function () {
+      
+      // Логика смены цвета кнопки при клике на чекбокс (чтобы визуально было понятно)
+      $('#policy_check').on('change', function () {
+        if(this.checked) {
+            $('#btnSend').addClass('btn-primary').removeClass('btn-outline-primary');
+        } else {
+            $('#btnSend').addClass('btn-outline-primary').removeClass('btn-primary');
         }
-        $('#default-suggestions .typeahead').typeahead({
-                minLength: 0,
-                highlight: true
-            },
-                {
-                    name: 'dvigatels',
-                    limit: 8,
-                    source: dvigatelsWithDefaults // если здесь указать просто переменную dvigatels - будет просто подсказка по набранному, 
-                    // а у нас стоит спец.функция, которая может указать
-                }).on('typeahead:close', function (evt, data) {
-                    
-                    var groups = {{ include.group }};
-                    var not_need = {% if include.groups_only %} true {% else %} false {% endif %};
-                    
-                    if(groups && (!(not_need == true)) && groups.indexOf(evt.currentTarget.value) !== -1 ){
-                        // evt.preventDefault();
-                        $("#default-suggestions .typeahead").trigger("focus");
-                    }
-
-                });
       });
-    
-    </script>
 
-  </form>
+      var dvigatels = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: {{ include.list }}
+      });
+
+      function dvigatelsWithDefaults(q, sync) {
+        if (q === '') {
+          sync({{ include.group }});
+        } else {
+          dvigatels.search(q, sync);
+        }
+      }
+
+      $('#default-suggestions .typeahead').typeahead({
+        minLength: 0,
+        highlight: true
+      },
+        {
+          name: 'dvigatels',
+          limit: 8,
+          source: dvigatelsWithDefaults
+        }).on('typeahead:close', function (evt, data) {
+
+          var groups = {{ include.group }};
+          var not_need = {% if include.groups_only %} true {% else %} false {% endif %};
+
+          if (groups && (!(not_need == true)) && groups.indexOf(evt.currentTarget.value) !== -1) {
+            $("#default-suggestions .typeahead").trigger("focus");
+          }
+        });
+    });
+  </script>
+</form>

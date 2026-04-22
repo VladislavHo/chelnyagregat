@@ -104,6 +104,9 @@ metakeywords: Двигатели КамАЗ 740 и Cummins купить прод
       </div>
       <div class="row" id="models_container">
         <!-- for item -->
+                         <!-- <a href="#~" onclick="show_dvigatel_popup(`05`);" class="nal-link" data-toggle="modal">
+                  <img src="/assets/img/kpp/kpp-14-kamaz.jpg" alt="{{item.name}}" class="img-thumbnail" style="border: none;" />
+                </a> -->
         {% for item in site.data.kpp %}
           <div class="engine col-md-6 col-lg-6 col-xs-12">
             <div class="row">
@@ -378,8 +381,22 @@ metakeywords: Двигатели КамАЗ 740 и Cummins купить прод
                                           &nbsp;&nbsp;&nbsp;
                                         <textarea id="request_comment_popup" class="form-control hidden" placeholder="комментарий"
                                           rows="3"></textarea>
-                                          <a href="javascript:" id="btnSend_popup" onclick='send_request("{{name}} ", $("#input_contact_popup").val(), $("#request_comment_popup").val()); $("#engineModal_one").modal("hide");' class="btn btn-sm btn-link "
-                                          style=" text-decoration: underline;">отправить</a>
+                                            <div class="agree_policy">
+                                              <label>
+                                                <input type="checkbox" id="policy_check_popup">
+                                                <span style="color: #4d4d4d;">
+                                                  Нажимая кнопку, Вы даете полное <a href="../assets/docs/2. Согласие на обработку персональных данных.pdf">согласие
+                                                    на обработку персональных данных</a> в соответствии с <a
+                                                    href="../assets/docs/1. Политика конфиденциальности персональных данных посетителя сайта.pdf">политикой
+                                                    конфиденциальности</a>.
+                                                </span>
+                                              </label>
+                                            </div>
+                                          <input id="btnSendPopup"
+                                            onclick="if($('#policy_check_popup').is(':checked')){ send_request($('#select').val(), $('#input_contact_popup').val(), $('#request_comment').val()); } else { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); }" 
+                                            class="btn btn-sm btn-outline-primary" type="button" value="отправить">
+                                          <!-- <a href="javascript:" id="btnSend_popup" onclick='send_request("{{name}} ", $("#input_contact_popup").val(), $("#request_comment_popup").val()); $("#engineModal_one").modal("hide");' class="btn btn-sm btn-link "
+                                          style=" text-decoration: underline;">отправить</a> -->
                                       </div>
                                      
                                   

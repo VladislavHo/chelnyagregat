@@ -18,6 +18,11 @@
   .team-item .contetn {
     padding: 15px 20px;
   }
+
+  .cookie-content {
+    align-items: flex-start;
+
+  }
 }
 
 /* tablets */

@@ -1,92 +1,121 @@
-
 {%- if include.page_url and include.page_url != "" -%}
-  {% assign page_url = include.page_url %}
+{% assign page_url = include.page_url %}
 {%- else -%}
-  {% assign page_url = page.page_url %}
+{% assign page_url = page.page_url %}
 {%- endif -%}
-{% assign product = site.data.reductor | where:"url", page_url | first  %}
- 
- <div >
-    <a href="/reductor_kamaz.html#catalog" class="btn btn-link" style="padding-top: 0px; margin-top: -30px;"> < вернуться в каталог редукторов</a>
+{% assign product = site.data.reductor | where:"url", page_url | first %}
+
+<div>
+  <a href="/reductor_kamaz.html#catalog" class="btn btn-link" style="padding-top: 0px; margin-top: -30px;">
+    < вернуться в каталог редукторов</a>
+</div>
+
+<div class="row">
+  <div id="photoDescription" class="col-md-5 col-xs-12">
+    <img src="/assets/img/reductor/{{product.img}}" srcset="/assets/img/reductor/{{product.img}}" alt="{{product.name}}"
+      title="{{product.name}}" class="" style="max-width:100%;" itemprop="contentUrl" />
   </div>
 
-   <div class="row">
-      <div id="photoDescription" class="col-md-5 col-xs-12">
-        <img src="/assets/img/reductor/{{product.img}}" srcset="/assets/img/reductor/{{product.img}}" alt="{{product.name}}" title="{{product.name}}" class="" style="max-width:100%;"   itemprop="contentUrl"/>
-      </div>
+  <div id="description" class="col-md-7 col-xs-12">
+    <!-- <h2>{{name}}</h2> -->
+    <table class="table">
+      <tr>
+        <td colspan="2"><span style="font-size:1.4em;">{{ product.name }} </span></td>
+      </tr>
 
-      <div id="description" class="col-md-7 col-xs-12">
-        <!-- <h2>{{name}}</h2> -->
-        <table class="table">
-            <tr>
-              <td colspan="2"><span style="font-size:1.4em;">{{ product.name }} </span></td>
-            </tr>
-            
-            {%- if product.model != "" -%}
-            <tr> <td colspan="2" style="text-align: right;"> {{ product.model }} </td> </tr>
-            {%- endif -%}
+      {%- if product.model != "" -%}
+      <tr>
+        <td colspan="2" style="text-align: right;"> {{ product.model }} </td>
+      </tr>
+      {%- endif -%}
 
-            {%- if include.page_url and include.page_url != "" -%}
-            <tr> <td colspan="2" style="text-align: right;">  
-              <a href="/kamaz-inf/reduktor/{{ product.url }}.html" class="btn btn-primary"> Полное описание редуктора... </a> </td> </tr>
-            {%- endif -%}
+      {%- if include.page_url and include.page_url != "" -%}
+      <tr>
+        <td colspan="2" style="text-align: right;">
+          <a href="/kamaz-inf/reduktor/{{ product.url }}.html" class="btn btn-primary"> Полное описание редуктора...
+          </a>
+        </td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.price1 != "" -%}
-            <tr> <td>{{ product.price1_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price1 }} </span> руб.</td> </tr>
-            {%- endif -%}
+      {%- if product.price1 != "" -%}
+      <tr>
+        <td>{{ product.price1_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price1 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.price2 != "" -%}
-            <tr> <td>{{ product.price2_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price2 }} </span> руб.</td> </tr>
-            {%- endif -%}
+      {%- if product.price2 != "" -%}
+      <tr>
+        <td>{{ product.price2_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price2 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if   product.price3 != "" -%}
-            <tr> <td>{{ product.price3_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price3 }} </span> руб.</td> </tr>
-            {%- endif -%}
-          
-            {%- if product.prim != "" -%}
-            <tr><td> применяемость </td>
-              <td> <small>{{ product.prim }}</small> </td>
-            </tr>
-            {%- endif -%}
+      {%- if product.price3 != "" -%}
+      <tr>
+        <td>{{ product.price3_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price3 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.zubya != "" -%}
-            <tr><td> зубьев </td>
-              <td> {{ product.zubya }} </td>
-            </tr>
-            {%- endif -%}
-          
-          <tr>
-            <td colspan="2"><small>{{ product.desc }} </small></td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              
-                <strong> Запросить предложение</strong>
-                <div class="form-group form-inline text-right" id='default-suggestions_card'>
-        
-                  <input type="tel" class="form-control" id="input_contact_popup" placeholder="ваш телефон или ваша почта" name="phone"
-                    required autocomplete="tel" style="margin-bottom: 5px;"
-                    onchange="$('#btnSend_popup').addClass('btn-primary');$('#btnSend_popup').removeClass('btn-link');">
-                  &nbsp;&nbsp;&nbsp;
-                  <a id="request_comment_link_popup" href="javascript:"
-                    onclick="$('#request_comment_link_popup').addClass('hidden'); $('#request_comment_popup').removeClass('hidden');"
-                    class="small" style=" color: darkslategrey;"> комментарий </a>
-                  &nbsp;&nbsp;&nbsp;
-                  <textarea id="request_comment_popup" class="form-control hidden" placeholder="комментарий"
-                    rows="3"></textarea>
-                    <a href="javascript:" id="btnSend_popup" onclick='send_request("{{product.name}} ", $("#input_contact_popup").val(), $("#request_comment_popup").val()); $("#engineModal_one").modal("hide");' 
+      {%- if product.prim != "" -%}
+      <tr>
+        <td> применяемость </td>
+        <td> <small>{{ product.prim }}</small> </td>
+      </tr>
+      {%- endif -%}
+
+      {%- if product.zubya != "" -%}
+      <tr>
+        <td> зубьев </td>
+        <td> {{ product.zubya }} </td>
+      </tr>
+      {%- endif -%}
+
+      <tr>
+        <td colspan="2"><small>{{ product.desc }} </small></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <strong> Запросить предложение</strong>
+          <div class="form-group form-inline text-right" id='default-suggestions_card'>
+
+            <input type="tel" class="form-control" id="input_contact_popup" placeholder="ваш телефон или ваша почта"
+              name="phone" required autocomplete="tel" style="margin-bottom: 5px;"
+              onchange="$('#btnSend_popup').addClass('btn-primary');$('#btnSend_popup').removeClass('btn-link');">
+            &nbsp;&nbsp;&nbsp;
+            <a id="request_comment_link_popup" href="javascript:"
+              onclick="$('#request_comment_link_popup').addClass('hidden'); $('#request_comment_popup').removeClass('hidden');"
+              class="small" style=" color: darkslategrey;"> комментарий </a>
+            &nbsp;&nbsp;&nbsp;
+            <textarea id="request_comment_popup" class="form-control hidden" placeholder="комментарий"
+              rows="3"></textarea>
+            <div class="agree_policy">
+              <label>
+                <input type="checkbox" id="policy_check_reductor">
+                <span style="color: #4d4d4d;">
+                  Нажимая кнопку, Вы даете полное <a
+                    href="../assets/docs/2. Согласие на обработку персональных данных.pdf">согласие
+                    на обработку персональных данных</a> в соответствии с <a
+                    href="../assets/docs/1. Политика конфиденциальности персональных данных посетителя сайта.pdf">политикой
+                    конфиденциальности</a>.
+                </span>
+              </label>
+            </div>
+            <input id="btnSendReductor"
+              onclick="if($('#policy_check_reductor').is(':checked')){ send_request($('#select').val(), $('#input_contact_popup').val(), $('#request_comment').val()); } else { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); }"
+              class="btn btn-sm btn-outline-primary" type="button" value="отправить">
+            <!-- <a href="javascript:" id="btnSend_popup" onclick='send_request("{{product.name}} ", $("#input_contact_popup").val(), $("#request_comment_popup").val()); $("#engineModal_one").modal("hide");' 
                     class="btn btn-sm btn-link"
-                    style=" text-decoration: underline;">отправить</a>
-                  
-                </div>
-                <!-- ({{product.price1}}/{{product.price2}}/{{product.price3}} -->
+                    style=" text-decoration: underline;">отправить</a> -->
 
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  
+          </div>
+          <!-- ({{product.price1}}/{{product.price2}}/{{product.price3}} -->
+
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
