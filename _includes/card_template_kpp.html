@@ -1,82 +1,106 @@
 <!-- {% assign product = include.product %}  -->
- <!-- {% if author %}      <p>{{ author.firstName }} {{ author.surname }}</p>      {% endif %} -->
+<!-- {% if author %}      <p>{{ author.firstName }} {{ author.surname }}</p>      {% endif %} -->
 
- {% assign product = site.data.kpp | where:"url", page.page_url | first  %} 
- <div >
-    <a href="/korobka_peredach_kpp_kamaz.html#catalog" class="btn btn-link" style="padding-top: 0px; margin-top: -30px;"> < вернуться в каталог КПП</a>
+{% assign product = site.data.kpp | where:"url", page.page_url | first %}
+<div>
+  <a href="/korobka_peredach_kpp_kamaz.html#catalog" class="btn btn-link" style="padding-top: 0px; margin-top: -30px;">
+    < вернуться в каталог КПП</a>
+</div>
+
+<div class="row">
+  <div id="photoDescription" class="col-md-5 col-xs-12">
+    <img src="/assets/img/kpp/{{product.img}}" srcset="/assets/img/kpp/{{product.img}}" alt="{{product.name}}"
+      title="{{product.name}}" class="" style="max-width:100%;" itemprop="contentUrl" />
   </div>
 
-   <div class="row">
-      <div id="photoDescription" class="col-md-5 col-xs-12">
-        <img src="/assets/img/kpp/{{product.img}}" srcset="/assets/img/kpp/{{product.img}}" alt="{{product.name}}" title="{{product.name}}" class="" style="max-width:100%;"   itemprop="contentUrl"/>
-      </div>
+  <div id="description" class="col-md-7 col-xs-12">
+    <!-- <h2>{{name}}</h2> -->
+    <table class="table">
+      <tr>
+        <td colspan="2"><span style="font-size:1.4em;">{{ product.name }} </span></td>
+      </tr>
 
-      <div id="description" class="col-md-7 col-xs-12">
-        <!-- <h2>{{name}}</h2> -->
-        <table class="table">
-            <tr>
-              <td colspan="2"><span style="font-size:1.4em;">{{ product.name }} </span></td>
-            </tr>
-            
-            {%- if product.model != "" -%}
-            <tr> <td colspan="2" style="text-align: right;"> {{ product.model }} </td> </tr>
-            {%- endif -%}
+      {%- if product.model != "" -%}
+      <tr>
+        <td colspan="2" style="text-align: right;"> {{ product.model }} </td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.price1 != "" -%}
-            <tr> <td>{{ product.price1_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price1 }} </span> руб.</td> </tr>
-            {%- endif -%}
+      {%- if product.price1 != "" -%}
+      <tr>
+        <td>{{ product.price1_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price1 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.price2 != "" -%}
-            <tr> <td>{{ product.price2_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price2 }} </span> руб.</td> </tr>
-            {%- endif -%}
+      {%- if product.price2 != "" -%}
+      <tr>
+        <td>{{ product.price2_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price2 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if   product.price3 != "" -%}
-            <tr> <td>{{ product.price3_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price3 }} </span> руб.</td> </tr>
-            {%- endif -%}
+      {%- if product.price3 != "" -%}
+      <tr>
+        <td>{{ product.price3_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price3 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            {%- if product.price4 != "" -%}
-            <tr> <td>{{ product.price4_n }}</td>
-              <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price4 }} </span> руб.</td> </tr>
-            {%- endif -%}
-          
-            {%- if product.prim != "" -%}
-            <tr><td> применяемость </td>
-              <td> <small>{{ product.prim }}</small> </td>
-            </tr>
-            {%- endif -%}
-          
-          <tr>
-            <td colspan="2"><small>{{ product.desc }} </small></td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              
-                <strong> Запросить предложение</strong>
-                <div class="form-group form-inline text-right" id='default-suggestions_card'>
-        
-                  <input type="tel" class="form-control" id="input_contact_popup" placeholder="ваш телефон или ваша почта" name="phone"
-                    required autocomplete="tel" style="margin-bottom: 5px;"
-                    onchange="$('#btnSend_popup').addClass('btn-primary');$('#btnSend_popup').removeClass('btn-link');">
-                  &nbsp;&nbsp;&nbsp;
-                  <a id="request_comment_link_popup" href="javascript:"
-                    onclick="$('#request_comment_link_popup').addClass('hidden'); $('#request_comment_popup').removeClass('hidden');"
-                    class="small" style=" color: darkslategrey;"> комментарий </a>
-                  &nbsp;&nbsp;&nbsp;
-                  <textarea id="request_comment_popup" class="form-control hidden" placeholder="комментарий"
-                    rows="3"></textarea>
-                    <a href="javascript:" id="btnSend_popup" onclick='send_request("{{product.name}} ", $("#input_contact_popup").val(), $("#request_comment_popup").val()); $("#engineModal_one").modal("hide");' 
-                    class="btn btn-sm btn-link"
-                    style=" text-decoration: underline;">отправить</a>
-                  
-                </div>
-                <!-- ({{product.price1}}/{{product.price2}}/{{product.price3}} -->
+      {%- if product.price4 != "" -%}
+      <tr>
+        <td>{{ product.price4_n }}</td>
+        <td style="text-align: right;"><span style="font-size:1.2em;">{{ product.price4 }} </span> руб.</td>
+      </tr>
+      {%- endif -%}
 
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  
+      {%- if product.prim != "" -%}
+      <tr>
+        <td> применяемость </td>
+        <td> <small>{{ product.prim }}</small> </td>
+      </tr>
+      {%- endif -%}
+
+      <tr>
+        <td colspan="2"><small>{{ product.desc }} </small></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <strong> Запросить предложение</strong>
+          <div class="form-group form-inline text-right" id='default-suggestions_card'>
+
+            <input type="tel" class="form-control" id="input_contact_popup" placeholder="ваш телефон или ваша почта"
+              name="phone" required autocomplete="tel" style="margin-bottom: 5px;"
+              onchange="$('#btnSend_popup').addClass('btn-primary');$('#btnSend_popup').removeClass('btn-link');">
+            &nbsp;&nbsp;&nbsp;
+            <a id="request_comment_link_popup" href="javascript:"
+              onclick="$('#request_comment_link_popup').addClass('hidden'); $('#request_comment_popup').removeClass('hidden');"
+              class="small" style=" color: darkslategrey;"> комментарий </a>
+            &nbsp;&nbsp;&nbsp;
+            <textarea id="request_comment_popup" class="form-control hidden" placeholder="комментарий"
+              rows="3"></textarea>
+            <div class="agree_policy">
+              <label>
+                <input type="checkbox" id="policy_check_popup">
+                <span style="color: #4d4d4d;">
+                  Нажимая кнопку, Вы даете полное <a
+                    href="../assets/docs/2. Согласие на обработку персональных данных.pdf">согласие
+                    на обработку персональных данных</a> в соответствии с <a
+                    href="./politika-konfidentsialnosti.html">политикой
+                    конфиденциальности</a>.
+                </span>
+              </label>
+            </div>
+            <input id="btnSendPopup"
+              onclick="if($('#policy_check_popup').is(':checked')){ send_request($('#select').val(), $('#input_contact_popup').val(), $('#request_comment').val()); } else { alert('Пожалуйста, подтвердите согласие на обработку персональных данных'); }"
+              class="btn btn-sm btn-outline-primary" type="button" value="отправить">
+
+          </div>
+          <!-- ({{product.price1}}/{{product.price2}}/{{product.price3}} -->
+
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
