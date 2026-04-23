@@ -91,7 +91,24 @@ function createCookieBanner() {
         @media (max-width: 768px) {
           .cookie-content {
             align-items: flex-start;
+            flex-direction: column;
+            gap: 5px;
           }
+        .cookie-description {
+            color: #666;
+            font-size: 10px;
+
+            }
+        .cookie-accept-btn {
+            background-color: #007cba;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 10px;
+            display: inline-block;
+        }
         }
         @media (max-width: 600px) {
             #cookie-banner {
